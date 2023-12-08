@@ -15,11 +15,6 @@ public class Controller {
 	@Autowired
 	public Sender sender;
 	
-	@GetMapping("")
-	public ResponseEntity<String> teste(){
-		return ResponseEntity.ok().body("Testando");
-	}
-	
 	@PostMapping("")
 	public ResponseEntity<Void> sendMessage(@RequestBody String message){
 		sender.sendMessage(message);

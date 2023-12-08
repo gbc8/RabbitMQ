@@ -1,0 +1,34 @@
+version: "3"
+services:
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 25676:25676
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+  consumer:
+    build: './consumer'
+    container_name: consumerapp
+    restart: always
+    depends_on:
+      - rabbit
+    ports: 
+      - 8081:8081
+    environment:
+      - RABBIT_MQ_HOST=rabbit
+  producer:
+    build: './producer'
+    container_name: producerapp
+    depends_on:
+      - rabbit
+    restart: always
+    ports: 
+      - 8082:8082
+    environment:
+      - RABBIT_MQ_HOST=rabbit
+  
